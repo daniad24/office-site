@@ -16,5 +16,20 @@ entrancesApi.post("/", async (c) => {
   if (!result.success) {
     return c.json({ errors: fieldErrors(result.error) }, 400);
   }
-  return c.json(createEntrance(result.data), 201);
+  try {
+    return c.json(createEntrance(result.data), 201);
+  } catch (error) {
+    // zod cannot know which buildings exist; the foreign key does
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      error.code === "SQLITE_CONSTRAINT_FOREIGNKEY"
+    ) {
+      return c.json(
+        { errors: { buildingId: ["Building does not exist"] } },
+        400
+      );
+    }
+    throw error;
+  }
 });
