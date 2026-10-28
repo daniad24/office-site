@@ -12,7 +12,8 @@
     "fix": "ultracite fix",
     "migrate": "bun run --filter server migrate",
     "prepare": "husky",
-    "seed": "bun run --filter server seed"
+    "seed": "bun run --filter server seed",
+    "test": "bun run --filter server test"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

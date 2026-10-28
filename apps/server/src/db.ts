@@ -7,10 +7,14 @@ import { join } from "node:path";
 const folder = join(import.meta.dir, "../data");
 mkdirSync(folder, { recursive: true });
 
-export const db = new Database(join(folder, "office.sqlite"), {
-  create: true,
-  strict: true,
-});
+// OFFICE_DB=":memory:" gives a throwaway database, which is what the tests use
+export const db = new Database(
+  process.env.OFFICE_DB ?? join(folder, "office.sqlite"),
+  {
+    create: true,
+    strict: true,
+  }
+);
 // readers do not wait for the writer; see the course's WAL slide
 db.run("PRAGMA journal_mode = WAL;");
 // SQLite ignores REFERENCES unless every connection turns this on
