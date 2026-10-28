@@ -10,6 +10,7 @@ import { team } from "./data";
 import { entrancesApi } from "./entrances";
 import { etaPages } from "./eta-pages";
 import { stringPages } from "./string-pages";
+import { surveysApi } from "./surveys";
 import { Layout } from "./views/Layout";
 
 interface Env {
@@ -82,6 +83,7 @@ app.get("/home", (c) => c.redirect("/"));
 
 app.route("/api/buildings", buildingsApi);
 app.route("/api/entrances", entrancesApi);
+app.route("/api/surveys", surveysApi);
 
 // step 4: pages from strings
 app.route("/strings", stringPages);
