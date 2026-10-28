@@ -25,6 +25,17 @@ export type NewEntrance = z.infer<typeof NewEntrance>;
 // what the server answers: the row's id and its building's name (a JOIN)
 export type Entrance = NewEntrance & { id: number; buildingName: string };
 
+// a survey is one visit to one entrance
+export const NewSurvey = z.object({
+  entranceId: z.number("Pick an entrance").int().positive("Pick an entrance"),
+  notes: z.string().trim().optional(),
+  surveyedOn: z.iso.date("Use a date like 2026-10-28"),
+  surveyor: z.string().trim().min(1, "Surveyor is required"),
+});
+
+export type NewSurvey = z.infer<typeof NewSurvey>;
+export type Survey = NewSurvey & { id: number };
+
 // { address?: string[], floors?: string[], … } — the shape both sides show
 export function fieldErrors(error: z.ZodError) {
   return z.flattenError(error).fieldErrors;
