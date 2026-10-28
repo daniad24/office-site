@@ -64,6 +64,11 @@ export function createEntrance(entrance: NewEntrance): Entrance {
   return created;
 }
 
+// true when a row was deleted, false when there was no such entrance
+export function deleteEntrance(id: number): boolean {
+  return db.query("DELETE FROM entrances WHERE id = ?").run(id).changes > 0;
+}
+
 export function searchEntrances(q: string): Entrance[] {
   // q travels as a bound parameter: data, never part of the SQL text
   return db

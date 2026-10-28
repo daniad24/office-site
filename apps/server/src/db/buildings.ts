@@ -8,6 +8,11 @@ export function listBuildings(): Building[] {
     .all();
 }
 
+// true when a row was deleted, false when there was no such building
+export function deleteBuilding(id: number): boolean {
+  return db.query("DELETE FROM buildings WHERE id = ?").run(id).changes > 0;
+}
+
 export function createBuilding(building: NewBuilding): Building {
   // RETURNING * hands back the row as stored, id included
   const row = db
